@@ -1,358 +1,478 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sameer - Platform Interface</title>
-  
-  <!-- Inter Font from Google Fonts for clean, readable typography -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sameer — Curated Introductions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            // Eye-friendly, soft peaceful white tone
-            'soft-bg': '#F7F8FA',
-            'soft-card': '#FFFFFF',
-            'standard-blue': '#2563EB',
-          },
-          boxShadow: {
-            'soft-glow': '0 18px 45px -12px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.03)',
-            'pill-shadow': '0 8px 24px -6px rgba(15, 23, 42, 0.12)',
-            'nav-shadow': '0 4px 20px -2px rgba(0, 0, 0, 0.03)',
-          }
-        }
-      }
-    }
-  </script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    /* Custom peaceful scrollbar and animations */
+    :root {
+      --bg-main: #0c0e12;
+      --bg-card: #15181e;
+      --bg-card-hover: #1c212a;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(217, 119, 54, 0.4);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #e07a38;
+      --accent-soft: rgba(224, 122, 56, 0.12);
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background-color: #F7F8FA;
-      color: #111827;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      padding: 0 1.25rem;
     }
 
-    /* Hide standard scrollbars for a clean carousel presentation */
-    .no-scrollbar::-webkit-scrollbar {
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Navigation */
+    header {
+      padding: 1.75rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-badge {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+      font-weight: 500;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 4.5rem 0 3.5rem;
+      text-align: center;
+    }
+
+    .tagline {
+      display: inline-block;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.95rem 2.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 8px 24px rgba(224, 122, 56, 0.25);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .hero-meta {
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Tabbed Journey Section */
+    .section-tabs {
+      padding: 3.5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      font-size: 1rem;
+    }
+
+    .tabs-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      background: var(--bg-card);
+      padding: 0.4rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.85rem 0.5rem;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card-hover);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+    }
+
+    .tab-content {
       display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    /* Card active transition */
-    .tab-card {
-      transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-      user-select: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2.25rem;
+      animation: fadeIn 0.25s ease-in-out;
     }
 
-    /* Subtle shimmer and subtle glass backdrop */
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .tab-content p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tab-points {
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .tab-points li {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .tab-points li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    /* Founder Message */
+    .founder-note {
+      margin: 3.5rem 0;
+      padding: 2.75rem 2.25rem;
+      background: linear-gradient(180deg, #13171e 0%, var(--bg-card) 100%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 14px;
+    }
+
+    .founder-badge {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .founder-note h2 {
+      font-family: var(--font-heading);
+      font-size: 1.85rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.3;
+    }
+
+    .founder-note p {
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+    }
+
+    .founder-signature {
+      margin-top: 1.75rem;
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-main);
+    }
+
+    .founder-title {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: normal;
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* Transparency card */
+    .pricing-note {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .pricing-note h4 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-note p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .tabs-nav {
+        grid-template-columns: 1fr 1fr;
+      }
+      .tab-btn {
+        padding: 0.75rem 0.25rem;
+        font-size: 0.85rem;
+      }
+      .founder-note {
+        padding: 1.75rem 1.25rem;
+      }
     }
   </style>
 </head>
+<body>
 
-<body class="h-full bg-soft-bg flex flex-col justify-between select-none">
+  <div class="container">
+    <header>
+      <a href="#" class="logo">sameer<span>.</span></a>
+      <div class="nav-badge">18+ Curated Dating</div>
+    </header>
 
-  <!-- Slide-out Sidebar Drawer Backdrop -->
-  <div id="sidebar-backdrop" 
-       class="fixed inset-0 bg-black/25 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300">
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <span class="tagline">Human-Curated Introductions</span>
+        <h1>Anyone can apply.<br>Not everyone gets matched.</h1>
+        <p>
+          No endless swiping. No public profiles. We review every application personally, introduce compatible people on shared values, and guide early dates with complete privacy.
+        </p>
+        <a href="#journey" class="btn-primary">Explore How It Works</a>
+        <div class="hero-meta">₹99 per curated introduction • Bengaluru & Tier-1 Cities</div>
+      </section>
+
+      <!-- 4 Interactive Tabs Section -->
+      <section class="section-tabs" id="journey">
+        <h2 class="section-title">The Guided Journey</h2>
+        <p class="section-subtitle">Click through the four stages of how every match is handled.</p>
+
+        <nav class="tabs-nav" role="tablist">
+          <button class="tab-btn active" onclick="openTab(event, 'tab-1')">1. The Application</button>
+          <button class="tab-btn" onclick="openTab(event, 'tab-2')">2. Blind Intro</button>
+          <button class="tab-btn" onclick="openTab(event, 'tab-3')">3. Virtual Dates</button>
+          <button class="tab-btn" onclick="openTab(event, 'tab-4')">4. Unlocked Chat</button>
+        </nav>
+
+        <!-- Tab 1 -->
+        <article id="tab-1" class="tab-content active">
+          <h3><span>01.</span> Comprehensive 16-Question Questionnaire</h3>
+          <p>
+            You join by answering our thoughtful 16-point questionnaire covering lifestyle, values, intellectual interests, and explicit deal-breakers.
+          </p>
+          <ul class="tab-points">
+            <li>No public directory where anyone can screenshot or browse your details.</li>
+            <li>Evaluated manually on intent, communication style, and life goals.</li>
+            <li>If there is no genuine compatible match right now, we keep your spot on standby instead of forcing bad dates.</li>
+          </ul>
+        </article>
+
+        <!-- Tab 2 -->
+        <article id="tab-2" class="tab-content">
+          <h3><span>02.</span> Limited-Profile Mutual Consent</h3>
+          <p>
+            When a potential match is identified, both members receive a carefully anonymized snapshot of the other person.
+          </p>
+          <ul class="tab-points">
+            <li>See only age, city, profession, lifestyle habits, and core interests.</li>
+            <li>Zero contact details are shown: no phone numbers, social handles, or email.</li>
+            <li>Both individuals must independently tap "Interested" before an introduction proceeds.</li>
+          </ul>
+        </article>
+
+        <!-- Tab 3 -->
+        <article id="tab-3" class="tab-content">
+          <h3><span>03.</span> Two Guided Virtual Meetings</h3>
+          <p>
+            Instead of getting lost in weeks of dry texting, mutual matches meet through structured, low-pressure virtual dates.
+          </p>
+          <ul class="tab-points">
+            <li>Scheduled via private Google Meet links (audio or video based on comfort).</li>
+            <li>Date #1 tests conversational rapport; Date #2 confirms authentic comfort.</li>
+            <li>Founder-moderated or scheduled assistance to keep boundaries safe and respectful.</li>
+          </ul>
+        </article>
+
+        <!-- Tab 4 -->
+        <article id="tab-4" class="tab-content">
+          <h3><span>04.</span> Admin-Controlled Chat Unlock</h3>
+          <p>
+            Private text, voice notes, and calls unlock inside the platform only after both individuals confirm they feel comfortable.
+          </p>
+          <ul class="tab-points">
+            <li>Direct messaging remains locked during early stages to avoid harassment and unwanted advances.</li>
+            <li>Once mutual trust is established, direct messaging is enabled.</li>
+            <li>Exchange personal phone numbers and socials at your own pace, on your own terms.</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- Founder's Message -->
+      <section class="founder-note">
+        <div class="founder-badge">Founder's Note</div>
+        <h2>Why we are slowing dating down.</h2>
+        <p>
+          Modern dating apps turned people into infinite catalogs. You swipe through hundreds of filtered pictures, send generic openers, collect matches that lead nowhere, and deal with ghosting or boundary issues.
+        </p>
+        <p>
+          I started <strong>sameer</strong> on a straightforward premise: people don't need a slot machine; they need intentionality, mutual privacy, and guided introductions.
+        </p>
+        <p>
+          We review every questionnaire ourselves. We don't promise that you will be matched tomorrow, because genuine compatibility takes discernment. But when an introduction does happen, it happens with mutual respect, zero exposed personal details, and a clear path to discover if there is real chemistry.
+        </p>
+        <div class="founder-signature">
+          Sameer
+          <span class="founder-title">Founder & Matchmaking Operator</span>
+        </div>
+      </section>
+
+      <!-- Transparency Note -->
+      <section class="pricing-note">
+        <h4>Fair, Transparent Pricing</h4>
+        <p>
+          ₹99 grants access to our curated matchmaking review and introduction service. We charge for human time and evaluation, not an algorithm tricking you into endless monthly subscriptions.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 sameer. All rights reserved. Strictly 18+.</p>
+      <p>A human-curated matchmaking experiment focusing on privacy, dignity, and real conversations.</p>
+    </footer>
   </div>
 
-  <!-- Slide-out Sidebar Drawer -->
-  <aside id="sidebar-drawer" 
-         class="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between p-6">
-    
-    <!-- Sidebar Header -->
-    <div>
-      <div class="flex items-center justify-between pb-6 border-b border-gray-100">
-        <div class="flex items-center space-x-3">
-          <div class="w-8 h-8 rounded-xl bg-black flex items-center justify-center text-white font-bold text-lg">
-            s
-          </div>
-          <span class="text-xl font-bold text-black tracking-tight">sameer</span>
-        </div>
-        <button id="close-sidebar-btn" 
-                class="p-2 rounded-xl text-gray-500 hover:text-black hover:bg-gray-100 transition-colors focus:outline-none"
-                aria-label="Close sidebar">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
+  <script>
+    function openTab(evt, tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
 
-      <!-- Navigation Links -->
-      <nav class="mt-6 space-y-1.5">
-        <a href="#overview" class="flex items-center space-x-3 px-3.5 py-3 rounded-2xl bg-gray-100 text-black font-medium text-sm transition-all">
-          <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
 
-
-<path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-          </svg>
-          <span>Platform Overview</span>
-        </a>
-
-        <a href="#analytics" class="flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-gray-600 hover:text-black hover:bg-gray-50 font-medium text-sm transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-          </svg>
-          <span>Analytics & Metrics</span>
-        </a>
-
-        <a href="#workflows" class="flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-gray-600 hover:text-black hover:bg-gray-50 font-medium text-sm transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10-4a1 1 0 011-1h4a1 1 0 011 1v8a1 1 0 01-1 1h-4a1 1 0 01-1-1v-8z"></path>
-          </svg>
-          <span>Board Workflows</span>
-        </a>
-
-        <a href="#messages" class="flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-gray-600 hover:text-black hover:bg-gray-50 font-medium text-sm transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-          </svg>
-          <span>Collaboration Hub</span>
-        </a>
-
-        <a href="#automations" class="flex items-center space-x-3 px-3.5 py-3 rounded-2xl text-gray-600 hover:text-black hover:bg-gray-50 font-medium text-sm transition-all">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-          <span>Automations & API</span>
-        </a>
-      </nav>
-    </div>
-
-    <!-- Sidebar Bottom Workspace Info -->
-    <div class="pt-6 border-t border-gray-100">
-      <div class="p-3.5 rounded-2xl bg-gray-50 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-xs">
-            SM
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-black leading-tight">Sameer Workspace</p>
-            <p class="text-[11px] text-gray-500">Free Tier Plan</p>
-          </div>
-        </div>
-        <span class="text-xs bg-black text-white px-2 py-0.5 rounded-full font-medium">Pro</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Top Navigation Bar -->
-  <header class="w-full px-6 md:px-10 py-4 flex items-center justify-between z-30">
-    
-    <!-- Top-Left Corner: Sidebar toggle icon + "sameer" site title in solid black -->
-    <div class="flex items-center space-x-4">
-      <!-- Sidebar Toggle Icon Button (Black) -->
-      <button id="open-sidebar-btn" 
-              class="w-10 h-10 rounded-2xl bg-white hover:bg-gray-100 border border-gray-200/80 shadow-sm flex items-center justify-center text-black transition-all active:scale-95 focus:outline-none"
-
-
-title="Open Navigation Menu"
-              aria-label="Open Sidebar Navigation">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7"></path>
-        </svg>
-      </button>
-
-      <!-- Site Title in solid black color -->
-      <div class="flex items-center space-x-2">
-        <a href="#" class="text-2xl md:text-3xl font-bold tracking-tight text-black hover:opacity-85 transition-opacity">
-          sameer
-        </a>
-      </div>
-    </div>
-
-    <!-- Top-Right Corner: Profile icon in standard blue color (#2563EB) -->
-    <div class="relative">
-      <button id="profile-btn" 
-              class="w-10 h-10 rounded-2xl bg-[#2563EB] hover:bg-blue-700 text-white flex items-center justify-center shadow-md shadow-blue-500/20 transition-transform active:scale-95 focus:outline-none"
-              title="User Profile Menu"
-              aria-label="User Profile">
-        <!-- Default standard user profile avatar icon -->
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-          <path fill-rule="evenodd" d="M12 4a4 4 0 100 8 4 4 0 000-8zm-7 15a7 7 0 0114 0H5z" clip-rule="evenodd" />
-        </svg>
-      </button>
-
-      <!-- Profile Dropdown Menu (Hidden by default) -->
-      <div id="profile-dropdown" 
-           class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-pill-shadow border border-gray-100 p-2 z-50 text-sm">
-        <div class="px-3 py-2 border-b border-gray-100">
-          <p class="font-semibold text-gray-900 text-sm">Sameer</p>
-          <p class="text-xs text-gray-500">hello@sameer.design</p>
-        </div>
-        <div class="py-1">
-          <a href="#" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span>Account Profile</span>
-          </a>
-          <a href="#" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
-            <span>Preferences</span>
-          </a>
-        </div>
-        <div class="pt-1 border-t border-gray-100">
-          <a href="#" class="flex items-center space-x-2 px-3 py-2 rounded-xl text-red-600 hover:bg-red-50 transition-colors">
-            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-            </svg>
-            <span>Log Out</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-
-<!-- Middle Platform Showcase: Occupying 70% of the screen space in the middle -->
-  <main class="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-2 relative w-full">
-    
-    <!-- Top tab category pills to quickly preview platform modes -->
-    <div class="mb-4 flex items-center space-x-2 overflow-x-auto no-scrollbar max-w-full px-2">
-      <button onclick="goToSlide(0)" class="tab-indicator px-4 py-1.5 rounded-full text-xs font-semibold bg-black text-white transition-all cursor-pointer">
-        Analytics Hub
-      </button>
-      <button onclick="goToSlide(1)" class="tab-indicator px-4 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-gray-600 hover:text-black hover:bg-white border border-gray-200/80 transition-all cursor-pointer">
-        Kanban Boards
-      </button>
-      <button onclick="goToSlide(2)" class="tab-indicator px-4 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-gray-600 hover:text-black hover:bg-white border border-gray-200/80 transition-all cursor-pointer">
-        Live Collaboration
-      </button>
-      <button onclick="goToSlide(3)" class="tab-indicator px-4 py-1.5 rounded-full text-xs font-semibold bg-white/80 text-gray-600 hover:text-black hover:bg-white border border-gray-200/80 transition-all cursor-pointer">
-        Automation Engine
-      </button>
-    </div>
-
-    <!-- Main Carousel Stage Area: 70% height container flanked with Left and Right Arrows -->
-    <div class="relative w-full max-w-6xl h-[68vh] min-h-[480px] max-h-[720px] flex items-center justify-center">
-
-      <!-- Left Navigation Arrow for swiping right-to-left / previous -->
-      <button id="prev-btn"
-              class="absolute left-1 md:left-4 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/95 hover:bg-white border border-gray-200/80 shadow-pill-shadow flex items-center justify-center text-black hover:scale-105 active:scale-95 transition-all focus:outline-none"
-              aria-label="Swipe to previous platform screen"
-              title="Previous Screen">
-        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-
-      <!-- Vertical Rectangle Carousel Window with Peaceful Soft Rounded Corners -->
-      <div id="carousel-viewport" 
-           class="w-full h-full overflow-hidden rounded-[28px] md:rounded-[36px] relative select-none">
-        
-        <!-- Track holding the vertical rectangle tabs -->
-        <div id="carousel-track" 
-             class="h-full flex transition-transform duration-500 ease-out cursor-grab active:cursor-grabbing">
-
-          <!-- TAB 1: Analytics & Metrics Dashboard (Vertical Rectangle with Soft Corners) -->
-          <div class="min-w-full h-full px-2 md:px-6 py-1">
-            <div class="w-full h-full bg-white rounded-[26px] md:rounded-[32px] border border-gray-200/80 shadow-soft-glow p-5 md:p-8 flex flex-col justify-between overflow-hidden relative">
-              
-              <!-- Tab Header Interface Bar -->
-              <div class="flex items-center justify-between pb-4 border-b border-gray-100">
-                <div class="flex items-center space-x-3">
-                  <div class="w-3.5 h-3.5 rounded-full bg-red-400/80"></div>
-                  <div class="w-3.5 h-3.5 rounded-full bg-amber-400/80"></div>
-                  <div class="w-3.5 h-3.5 rounded-full bg-emerald-400/80"></div>
-                  <span class="ml-2 text-xs md:text-sm font-semibold text-gray-700">Platform View • Realtime Telemetry</span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-
-
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-                    Live Syncing
-                  </span>
-                  <span class="text-xs text-gray-400 hidden sm:inline">v2.4.0</span>
-                </div>
-              </div>
-
-              <!-- Tab Content: Dashboard Metric Visuals -->
-              <div class="flex-1 py-4 grid grid-cols-1 md:grid-cols-3 gap-4 overflow-y-auto no-scrollbar">
-                
-                <!-- Stat Card 1 -->
-                <div class="p-4 rounded-2xl bg-gray-50/90 border border-gray-100 flex flex-col justify-between">
-                  <div>
-                    <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Active Users</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-black mt-1">128,490</h3>
-                  </div>
-                  <div class="mt-4 flex items-center text-xs text-emerald-600 font-semibold">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                    </svg>
-                    +18.4% this month
-                  </div>
-                </div>
-
-                <!-- Stat Card 2 -->
-                <div class="p-4 rounded-2xl bg-gray-50/90 border border-gray-100 flex flex-col justify-between">
-                  <div>
-                    <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">System Throughput</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-black mt-1">99.98%</h3>
-                  </div>
-                  <div class="mt-4 flex items-center text-xs text-emerald-600 font-semibold">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Optimal latency: 14ms
-                  </div>
-                </div>
-
-                <!-- Stat Card 3 -->
-                <div class="p-4 rounded-2xl bg-gray-50/90 border border-gray-100 flex flex-col justify-between">
-                  <div>
-                    <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Cloud Integrations</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-black mt-1">42 Connected</h3>
-                  </div>
-                  <div class="mt-4 flex items-center text-xs text-blue-600 font-semibold">
-                    <span>Active webhooks</span>
-                  </div>
-                </div>
-
-                <!-- Main Visual Chart Mockup Inside Interface -->
-                <div class="md:col-span-3 p-5 rounded-2xl bg-gradient-to-b from-gray-50 to-white border border-gray-100 flex flex-col justify-between">
-                  <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-semibold text-gray-700">Platform Performance Vector</span>
-                    <div class="flex space-x-2 text-xs text-gray-500">
-                      <span class="px-2 py-0.5 rounded-lg bg-white border border-gray-200">Day</span>
-                      <span class="px-2 py-0.5 rounded-lg bg-black text-white">Week</span>
-                      <span class="px-2 py-0.5 rounded-lg bg-white border border-gray-200">Month</span>
-                    </div>
-                  </div>
-
-                  <!-- Visual SVG Bar & Trend Graph -->
-                  <div class="w-full h-24 md:h-32 flex items-end justify-between gap-1.5 md:gap-3 pt-2">
-                    <div class="w-full bg-blue-100 hover:bg-blue-600 transition-colors rounded-t-lg h-[45%]"></div>
-
-
-<div class="w-full bg-blue-200 hover:bg-blue-600 transition-colors rounded-t-lg h-[65%]"></div>
-                    <div class="w-full bg-blue-300 hover:bg-blue-600 transition-colors rounded-t-lg h-[55%]"></div>
-                    <div class="w-full bg-blue-200 hover:bg-blue-600 transition-colors rounded-t-lg h-[80%]"></div>
-                    <div class="w-full bg-blue-400 hover:bg-blue-600 transition-colors rounded-t-lg h-[60%]"></div>
-                    <div class="w-full bg-blue-500 hover:bg-blue-600 transition-colors rounded-t-lg h-[92%]"></div>
-                    <d
+      document.getElementById(tabId).classList.add('active');
+      evt.currentTarget.classList.add('active');
+    }
+  </script>
+</body>
+</html>
